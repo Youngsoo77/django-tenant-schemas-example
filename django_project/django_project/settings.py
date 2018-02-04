@@ -37,6 +37,7 @@ TENANT_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #
+    'customers',
 )
 
 INSTALLED_APPS = (
@@ -52,6 +53,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     #
     'countries',
+    'customers',
 )
 
 TENANT_MODEL = 'tenant_control.Company'

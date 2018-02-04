@@ -11,6 +11,7 @@ class CountryAdmin(admin.ModelAdmin):
     """Countries must be readonly on non-public schemas."""
 
     list_display = ['code', 'name']
+    list_display_links = list_display
 
     def _is_public_schema(self):
         return connection.schema_name == get_public_schema_name()
