@@ -1,4 +1,4 @@
-<form action="" method="post">
+<form action="" method="post" onsubmit="OnSubmit()">
     {% csrf_token %}
     {{ form.as_p }}
     {% if object.pk %}
@@ -6,6 +6,12 @@
             <b>Schema Name:</b> {{ object.schema_name }}
         </p>
     {% endif %}
-    <input type="submit" value="{% if object.pk %}Update{% else %}Create{% endif %}" />
+    <input type="submit" id="btn-submit" value="{% if object.pk %}Update{% else %}Create{% endif %}" />
 </form>
 <a href="{% url 'company-list' %}">Go Back to List</a>
+<script>
+    function OnSubmit() {
+        var button = document.getElementById('btn-submit');
+        button.disabled = true;
+    }
+</script>
