@@ -26,6 +26,7 @@ SHARED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #
+    'countries',
 )
 
 TENANT_APPS = (
@@ -50,12 +51,13 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #
+    'countries',
 )
 
 TENANT_MODEL = 'tenant_control.Company'
 
 MIDDLEWARE = [
-    'tenant_schemas.middleware.DefaultTenantMiddleware',
+    'tenant_schemas.middleware.TenantMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -65,7 +67,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-PUBLIC_SCHEMA_URLCONF = 'django_project.urls_public'
 ROOT_URLCONF = 'django_project.urls'
 
 TEMPLATES = [

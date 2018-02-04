@@ -26,4 +26,4 @@
 
         docker-compose up
 
-1. Wait until the containers start up, then open [http://localhost:8000](http://localhost:8000) in your browser
+1. Wait until the containers start up, then open [http://localhost:8000/admin](http://localhost:8000/admin) in your browser. Use `admin` as both user and password.

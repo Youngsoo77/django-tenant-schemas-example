@@ -6,7 +6,19 @@ from django import forms
 from .models import Company
 
 
-class CreateCompanyForm(forms.ModelForm):
+class UpdateCompanyForm(forms.ModelForm):
+    class Meta:
+        model = Company
+        fields = ['name', 'domain_url', 'schema_name']
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateCompanyForm, self).__init__(*args, **kwargs)
+        self.fields['domain_url'].widget.attrs['placeholder'] = '{{ subdomain }}.localhost'
+
+
+class CreateCompanyForm(UpdateCompanyForm):
+    """When creating a Company, also collect user data for its first superuser.
+    """
     username = UsernameField(max_length=254)
     email = forms.EmailField(label='Email', max_length=254)
     password = forms.CharField(
@@ -15,17 +27,6 @@ class CreateCompanyForm(forms.ModelForm):
         widget=forms.PasswordInput,
     )
 
-    def __init__(self, *args, **kwargs):
-        super(CreateCompanyForm, self).__init__(*args, **kwargs)
-
-        self.fields['domain_url'].widget.attrs['placeholder'] = '{{ subdomain }}.localhost'
-
     class Meta:
         model = Company
         fields = ['name', 'domain_url', 'schema_name', 'username', 'email', 'password']
-
-
-class UpdateCompanyForm(forms.ModelForm):
-    class Meta:
-        model = Company
-        fields = ['name', 'domain_url']
