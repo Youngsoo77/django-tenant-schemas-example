@@ -1,0 +1,11 @@
+<h2>Companies</h2>
+<ul>
+    {% for company in object_list %}
+        <li>
+            <a href="{% url 'company-update' pk=company.pk %}">
+                {{ company.name }} ({{ company.schema_name }})
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'company-create' %}">Create New</a>

@@ -1,0 +1,11 @@
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if object.pk %}
+        <p>
+            <b>Schema Name:</b> {{ object.schema_name }}
+        </p>
+    {% endif %}
+    <input type="submit" value="{% if object.pk %}Update{% else %}Create{% endif %}" />
+</form>
+<a href="{% url 'company-list' %}">Go Back to List</a>

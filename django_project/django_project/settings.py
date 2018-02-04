@@ -1,5 +1,8 @@
-import dj_database_url
+# Python
 import os
+
+# Third Party
+import dj_database_url
 from decouple import config
 
 
@@ -11,7 +14,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-INSTALLED_APPS = [
+SHARED_APPS = (
+    'tenant_schemas',
+    #
+    'tenant_control',
+    #
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -19,10 +26,36 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #
-    'core',
-]
+)
+
+TENANT_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    #
+)
+
+INSTALLED_APPS = (
+    'tenant_schemas',
+    #
+    'tenant_control',
+    #
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    #
+)
+
+TENANT_MODEL = 'tenant_control.Company'
 
 MIDDLEWARE = [
+    'tenant_schemas.middleware.DefaultTenantMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -32,6 +65,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+PUBLIC_SCHEMA_URLCONF = 'django_project.urls_public'
 ROOT_URLCONF = 'django_project.urls'
 
 TEMPLATES = [
@@ -56,6 +90,11 @@ DATABASE_URL = config('DATABASE_URL')
 DATABASES = {
     'default': dj_database_url.parse(DATABASE_URL)
 }
+DATABASES['default']['ENGINE'] = 'tenant_schemas.postgresql_backend'
+
+DATABASE_ROUTERS = (
+    'tenant_schemas.routers.TenantSyncRouter',
+)
 
 LANGUAGE_CODE = 'en-us'
 
@@ -68,3 +107,5 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
+DEFAULT_FILE_STORAGE = 'tenant_schemas.storage.TenantFileSystemStorage'
