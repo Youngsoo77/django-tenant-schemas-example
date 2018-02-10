@@ -12,7 +12,7 @@ services:
         - tenants-example
       environment:
         - DATABASE_URL=postgres://postgres:postgres@database:5432/postgres
-      command: bash -c "sleep 5 && python manage.py migrate_schemas && python manage.py runserver 0.0.0.0:8000"
+      command: bash -c "sleep 10 && python manage.py migrate_schemas && python manage.py runserver 0.0.0.0:8000"
       depends_on:
         - database
       links:
